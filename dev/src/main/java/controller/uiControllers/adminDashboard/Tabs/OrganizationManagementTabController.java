@@ -57,11 +57,11 @@ public class OrganizationManagementTabController {
         if (popUpDialog.validateForm()) {
             // Update the organization
             Organization organization = new Organization(
-                    popUpDialog.getId(),
+                    popUpDialog.getIdOrg(),
                     popUpDialog.getFormData().get("Name"),
                     popUpDialog.getFormData().get("Description")
             );
-            ControllersGetter.organizationsController.editOrganization(popUpDialog.getId(), organization);
+            ControllersGetter.organizationsController.editOrganization(popUpDialog.getIdOrg(), organization);
             view.refreshTable();
             JOptionPane.showMessageDialog(popUpDialog, "Organization updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             popUpDialog.dispose();

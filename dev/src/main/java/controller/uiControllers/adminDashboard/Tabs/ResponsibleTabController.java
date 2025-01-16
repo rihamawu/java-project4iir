@@ -38,7 +38,7 @@ public class ResponsibleTabController {
         try {
             if (formDialog.validateForm()) {
                 Responsible responsible = saveUtil.saveFormData(formDialog.getFormData());
-                ControllersGetter.responsiblesController.editResponsible(formDialog.getId(), responsible);
+                ControllersGetter.responsiblesController.editResponsible(formDialog.getIdOrg(), responsible);
                 view.refreshTable();
                 JOptionPane.showMessageDialog(
                         editResponsibleForm,

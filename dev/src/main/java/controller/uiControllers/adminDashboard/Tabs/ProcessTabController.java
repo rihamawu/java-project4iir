@@ -64,7 +64,7 @@ public class ProcessTabController {
         if (popUpDialog.validateForm()) {
             OrgProcess process = new OrgProcess(
                     popUpDialog.getFormData().get("IdOrganization"),
-                    popUpDialog.getId(),
+                    popUpDialog.getIdOrg(),
                     popUpDialog.getFormData().get("Name"),
                     popUpDialog.getFormData().get("Description")
             );

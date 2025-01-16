@@ -44,7 +44,7 @@ public class AuditsTabController {
         try {
             if (formDialog.validateForm()) {
                 Audit audit = saveUtil.saveFormData(formDialog.getFormData());
-                ControllersGetter.auditsController.editAudit(formDialog.getId(), audit);
+                ControllersGetter.auditsController.editAudit(formDialog.getIdOrg(), audit);
                 view.refreshTable();
                 JOptionPane.showMessageDialog(
                         editAuditForm,

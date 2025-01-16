@@ -40,7 +40,7 @@ public class StandardTabController {
                 Standard standard = saveUtil.saveFormData(formDialog.getFormData());
                 String idOrg = standard.getIdOrganization(); // Get the organization ID
                 String idManagementSystem = standard.getIdManagementSystem(); // Get the management system ID
-                ControllersGetter.organizationsController.editSystemManagementStandardById(idOrg, idManagementSystem, formDialog.getId(), standard);
+                ControllersGetter.organizationsController.editSystemManagementStandardById(idOrg, idManagementSystem, formDialog.getIdOrg(), standard);
                 view.refreshTable();
                 JOptionPane.showMessageDialog(
                         editStandardForm,

@@ -40,7 +40,7 @@ public class RequirementTabController {
                 Requirement requirement = saveUtil.saveFormData(formDialog.getFormData());
                 String idOrg = requirement.getIdOrganization();
                 String idMS = requirement.getIdManagementSystem(); // Get the management system ID
-                ControllersGetter.organizationsController.editSystemManagementRequirementById(idOrg, idMS, formDialog.getId(), requirement);
+                ControllersGetter.organizationsController.editSystemManagementRequirementById(idOrg, idMS, formDialog.getIdOrg(), requirement);
                 view.refreshTable();
                 JOptionPane.showMessageDialog(
                         editRequirementForm,

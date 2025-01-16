@@ -81,7 +81,7 @@ public class AuditorManagementTabController {
                 Account account = saveUtil.saveFormData(formDialog.getFormData()); // Save form data
                 account.setAccountType("auditor");
                 System.out.println(account);
-                accountsController.editAccount(formDialog.getId(),account); // Create account using AccountsController
+                accountsController.editAccount(formDialog.getIdOrg(),account); // Create account using AccountsController
 
                 // Show success message
                 JOptionPane.showMessageDialog(

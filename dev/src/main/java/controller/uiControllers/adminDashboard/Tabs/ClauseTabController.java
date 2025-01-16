@@ -41,7 +41,7 @@ public class ClauseTabController {
                 String idOrg = clause.getIdOrganization(); // Get the organization ID
                 String idManagementSystem = clause.getIdManagementSystem(); // Get the management system ID
                 String idStandard = clause.getIdStandard(); // Get the standard ID
-                ControllersGetter.organizationsController.editSystemManagementStandardClauseById(idOrg, idManagementSystem, idStandard, formDialog.getId(), clause);
+                ControllersGetter.organizationsController.editSystemManagementStandardClauseById(idOrg, idManagementSystem, idStandard, formDialog.getIdOrg(), clause);
                 view.refreshTable();
                 JOptionPane.showMessageDialog(
                         editClauseForm,

@@ -2,11 +2,7 @@ package controller.uiControllers.adminDashboard.Tabs;
 
 import model.SystemManagement.ManagementSystem;
 import utils.ControllersGetter;
-import utils.SaveUtil;
-import utils.interfaces.IButtonEditorEventsHandler;
 import utils.interfaces.IPopUpDialog;
-import utils.interfaces.objectConverter.ManagementSystemConverter;
-import view.components.ButtonsActions;
 import view.pages.AdminDashboard.PopUpDialog;
 import view.pages.AdminDashboard.ManagementSystemManagementTab;
 
@@ -14,10 +10,6 @@ import javax.swing.*;
 
 public class ManagementSystemManagementTabController {
     private ManagementSystemManagementTab view;
-    private PopUpDialog createManagementSystemForm;
-    private PopUpDialog editManagementSystemForm;
-    private String[] columnNames = ManagementSystemManagementTab.getColumnNamesCreateEdit();
-    private SaveUtil<ManagementSystem> saveUtil = new SaveUtil(new ManagementSystemConverter());
 
     public ManagementSystemManagementTabController(ManagementSystemManagementTab view) {
         this.view = view;
@@ -25,121 +17,94 @@ public class ManagementSystemManagementTabController {
     }
 
     private void initController() {
-        addCreateManagementSystemButtonEvent();
-    }
-
-    private void addCreateManagementSystemButtonEvent() {
-        view.getCreateButton().addActionListener(ActionEvent -> {
-            createManagementSystemForm = new PopUpDialog("Create Management System", columnNames, saveCreateManagementSystemIFormEventHandler);
+        // Add action listener to the create button
+        view.getCreateButton().addActionListener(e -> {
+            System.out.println("Create new management system");
+            PopUpDialog createDialog = new PopUpDialog("Create Management System", ManagementSystemManagementTab.getColumnNamesCreateEdit(), popUpDialog);
         });
     }
 
-    private IPopUpDialog saveEditManagementSystemIFormEventHandler = (formDialog) -> {
-        try {
-            if (formDialog.validateForm()) {
-                ManagementSystem managementSystem = saveUtil.saveFormData(formDialog.getFormData());
-                String idOrg = managementSystem.getIdOrganization(); // Get the organization ID
-                System.out.println(idOrg+"\t"+formDialog.getId()+"here we go");
-
-                ControllersGetter.organizationsController.editManagementSystemInOrganization(idOrg, formDialog.getId(), managementSystem);
-                view.refreshTable();
-                JOptionPane.showMessageDialog(
-                        editManagementSystemForm,
-                        "Management System updated successfully!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                formDialog.dispose();
-            } else {
-                JOptionPane.showMessageDialog(
-                        formDialog,
-                        "Please fill in all fields.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                    editManagementSystemForm,
-                    "An error occurred: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
-            );
+    IPopUpDialog popUpDialog = (formDialog) -> {
+        if (formDialog.getTitle().equals("Create Management System")) {
+            handleCreateManagementSystem(formDialog);
+        } else if (formDialog.getTitle().equals("Edit Management System")) {
+            handleEditManagementSystem(formDialog);
         }
     };
 
-    private IPopUpDialog saveCreateManagementSystemIFormEventHandler = (formDialog) -> {
-        System.out.println("ManagementSystemManagementTabController saveCreateManagementSystemIFormEventHandler");
-        try {
-            if (formDialog.validateForm()) {
-                ManagementSystem managementSystem = saveUtil.saveFormData(formDialog.getFormData());
-                String idOrg = managementSystem.getIdOrganization(); // Get the organization ID
-                ControllersGetter.organizationsController.addManagementSystemToOrganization(idOrg, managementSystem);
-                JOptionPane.showMessageDialog(
-                        formDialog,
-                        "New Management System added successfully!",
-                        "Success",
-                        JOptionPane.INFORMATION_MESSAGE
-                );
-                view.refreshTable();
-                formDialog.dispose();
-            } else {
-                JOptionPane.showMessageDialog(
-                        formDialog,
-                        "Please fill in all fields.",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(
-                    formDialog,
-                    "An error occurred: " + e.getMessage(),
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE
+    private void handleCreateManagementSystem(PopUpDialog popUpDialog) {
+        if (popUpDialog.validateForm()) {
+            // Create a new management system
+            ManagementSystem managementSystem = new ManagementSystem(
+                    popUpDialog.getFormData().get("IdOrganization"),
+                    popUpDialog.getFormData().get("Description"),
+                    popUpDialog.getFormData().get("Certificate")
             );
-        }
-    };
-
-    private IButtonEditorEventsHandler iButtonEditorEventsHandler = new IButtonEditorEventsHandler() {
-        @Override
-        public void editObjectEventHandler(ButtonsActions view) {
-            String[] columnNames = ManagementSystemManagementTab.getColumnNamesCreateEdit();
-            editManagementSystemForm = new PopUpDialog("Edit", columnNames, view.getRowData(), saveEditManagementSystemIFormEventHandler, view.getId());
-        }
-        @Override
-        public void deleteObjectEventHandler(ButtonsActions buttonsActionsView) {
             try {
-                int response = JOptionPane.showConfirmDialog(
-                        null,
-                        "Are you sure you want to delete this Management System?",
-                        "Confirm Delete",
-                        JOptionPane.YES_NO_OPTION
-                );
-
-                if (response == JOptionPane.YES_OPTION) {
-                    String idOrg = buttonsActionsView.getRowData()[0].toString(); // Get the organization ID
-                    ControllersGetter.organizationsController.deleteManagementSystemFromOrganization(idOrg, buttonsActionsView.getId());
-                    view.refreshTable();
-                    System.out.println("Deleting Management System");
-                } else {
-                    System.out.println("Deleting operation canceled.");
-                }
+                ControllersGetter.organizationsController.addManagementSystemToOrganization(managementSystem.getIdOrganization(), managementSystem);
+                view.refreshTable();
+                JOptionPane.showMessageDialog(popUpDialog, "Management System created successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                popUpDialog.dispose();
             }catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(
-                        null,
-                        "An error occurred: " + e.getMessage(),
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE
-                );
+                JOptionPane.showMessageDialog(popUpDialog, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        }
-    };
 
-    public IButtonEditorEventsHandler getIButtonEditorEventsHandler() {
-        return iButtonEditorEventsHandler;
+        } else {
+            JOptionPane.showMessageDialog(popUpDialog, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void handleEditManagementSystem(ManagementSystemManagementTab.ButtonEditor editor) {
+        PopUpDialog editDialog = new PopUpDialog(
+                "Edit Management System",
+                ManagementSystemManagementTab.getColumnNamesCreateEdit(),
+                editor.getRowData(),
+                popUpDialog,
+                editor.getIdOrg(), // Pass the organization ID
+                editor.getIdManagementSystem() // Pass the management system ID
+        );
+    }
+
+    private void handleEditManagementSystem(PopUpDialog popUpDialog) {
+        if (popUpDialog.validateForm()) {
+            // Update the management system
+            ManagementSystem managementSystem = new ManagementSystem(
+                    popUpDialog.getIdManagementSystem(), // Management System ID
+                    popUpDialog.getFormData().get("IdOrganization"), // Organization ID
+                    popUpDialog.getFormData().get("Description"),
+                    popUpDialog.getFormData().get("Certificate")
+            );
+            System.out.println("Edit Management System: " + managementSystem);
+            try {
+                ControllersGetter.organizationsController.editManagementSystemInOrganization(managementSystem.getIdOrganization(), managementSystem.getIdManagementSystem(), managementSystem);
+
+                view.refreshTable();
+                JOptionPane.showMessageDialog(popUpDialog, "Management System updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                popUpDialog.dispose();
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(popUpDialog, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    public void handleDeleteManagementSystem(ManagementSystemManagementTab.ButtonEditor editor) {
+        int response = JOptionPane.showConfirmDialog(
+                null,
+                "Are you sure you want to delete this Management System?",
+                "Confirm Delete",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (response == JOptionPane.YES_OPTION) {
+            // Delete the management system using both organization ID and management system ID
+            try {
+                ControllersGetter.organizationsController.deleteManagementSystemFromOrganization(editor.getIdOrg(), editor.getIdManagementSystem());
+            }catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            view.refreshTable();
+        }
     }
 }

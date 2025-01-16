@@ -15,11 +15,17 @@ public class PopUpDialog extends JDialog {
 
 
 
-    public String getId() {
-        return id;
+    public String getIdOrg() {
+        return idOrg;
     }
 
-    String id;
+    String idOrg;
+
+    public String getIdManagementSystem() {
+        return idManagementSystem;
+    }
+
+    String idManagementSystem;
     private Map<String, String> formData = new HashMap<>();
     private Map<String, JTextField> fields = new HashMap<>();
 
@@ -44,13 +50,25 @@ public class PopUpDialog extends JDialog {
 
         this.setVisible(true);
     }
-    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String id) {
+    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String idOrg) {
         super((JFrame) null, title, true); // Modal dialog
         setUpUI(fieldNames, data);
 
 
-        this.id=id;
+        this.idOrg = idOrg;
 
+
+
+        formDialogController = new FormDialogController(this, iPopUpDialog);
+        this.setVisible(true);
+    }
+    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String idOrg,String idManagementSystem) {
+        super((JFrame) null, title, true); // Modal dialog
+        setUpUI(fieldNames, data);
+
+
+        this.idOrg =idOrg;
+        this.idManagementSystem= idManagementSystem;
 
 
         formDialogController = new FormDialogController(this, iPopUpDialog);

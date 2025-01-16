@@ -27,14 +27,20 @@ public class ManagementSystem {
         this.certificate = "unknown";
     }
 
-    public ManagementSystem(String idManagementSystem, String idOrganization, String description, String certificate, ArrayList<Standard> standards, ArrayList<Requirement> requirements) {
+    public ManagementSystem(String idManagementSystem, String idOrganization, String description, String certificate) {
         this.idManagementSystem = idManagementSystem;
         this.idOrganization = idOrganization;
         this.description = description;
         this.certificate = certificate;
-        this.standards = standards;
-        this.requirements = requirements;
+
     }
+    public ManagementSystem( String idOrganization, String description, String certificate) {
+        this.idOrganization = idOrganization;
+        this.description = description;
+        this.certificate = certificate;
+        this.idManagementSystem = UUID.randomUUID().toString();
+    }
+
 
 
     // Getters and Setters
