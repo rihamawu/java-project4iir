@@ -1,0 +1,47 @@
+[
+	{
+		"idOrg": 1,
+		"name": "",
+		"description": "",
+        "sites":[
+            {
+                "idSite":1,
+                "address":"",
+                "description":"",
+                "name":""
+            }
+        ],
+		"ManagementSystems": [
+			{
+				"idSystemManagement": 1,
+				"description": "",
+				"certificate": "",
+				"Standard": [
+					{
+						"idStandard": 1,
+						"description": "",
+						"name": "",
+						"reference": "",
+
+						"clause": [
+							{
+								"idClause": "",
+								"description": "",
+								"reference": "",
+								"name": ""
+							}
+						]
+					}
+				],
+				"requirement": [
+					{
+						"idRequirement": 1,
+						"description": "",
+						"reference": "",
+						"name": ""
+					}
+				]
+			}
+		]
+	}
+]

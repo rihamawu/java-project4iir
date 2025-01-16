@@ -1,6 +1,8 @@
-package view;
+package view.pages;
 
-import controller.LoginController;
+
+import controller.uiControllers.LoginPageController;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,7 +14,7 @@ public class LoginPage extends JFrame {
 
     public LoginPage() {
         SetupUi();
-        LoginController loginController = new LoginController(this);
+        LoginPageController loginController = new LoginPageController(this);
 
     }
     public JLabel GetTitle() {
@@ -63,18 +65,12 @@ public class LoginPage extends JFrame {
         setVisible(true);
     }
     public static void main(String[] args) {
-        // Create a JFrame to display the LoginPage
-        JFrame frame = new JFrame("Login Page");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setLocationRelativeTo(null); // Center the frame
-
         // Add the LoginPage panel to the frame
         LoginPage loginPage = new LoginPage();
-        frame.add(loginPage);
-
-        // Display the frame
-        frame.setVisible(true);
+        loginPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        loginPage.setSize(500, 400);
+        loginPage.setLocationRelativeTo(null); // Center the frame
+        loginPage.setVisible(true);
     }
 
 

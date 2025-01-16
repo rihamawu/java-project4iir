@@ -1,0 +1,37 @@
+[ {
+  "idAccount" : "SDK1213E",
+  "firstName" : "ayoub",
+  "lastName" : "majid",
+  "email" : "me@gmail.com",
+  "password" : "string",
+  "phoneNumber" : "0771798765",
+  "domain" : "the admin of the application",
+  "accountType" : "admin"
+}, {
+  "idAccount" : "448fbf2c-16f6-463a-ae72-05ab7655c120",
+  "firstName" : "amine",
+  "lastName" : "majid",
+  "email" : "amine@gmail.com",
+  "password" : "amine",
+  "phoneNumber" : "0771798765",
+  "domain" : "tech",
+  "accountType" : "auditor"
+}, {
+  "idAccount" : "8bd8c5c0-7024-4f14-8739-928e8d6ac012",
+  "firstName" : "zineb",
+  "lastName" : "nami",
+  "email" : "zineb@gmail.com",
+  "password" : "zineb",
+  "phoneNumber" : "0345343",
+  "domain" : "tech",
+  "accountType" : "auditor"
+}, {
+  "idAccount" : "eadc93b4-cab0-4829-abd9-d58573a3454e",
+  "firstName" : "me",
+  "lastName" : "me",
+  "email" : "me2@gmail.com",
+  "password" : "string",
+  "phoneNumber" : "0648415152",
+  "domain" : "???",
+  "accountType" : "auditor"
+} ]

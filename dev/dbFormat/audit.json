@@ -1,0 +1,36 @@
+[
+	{
+		"idAudit": 1,
+		"dateDebut": "",
+		"ExpDate": "",
+		"subject": "",
+		"status": "[pending, in progress, done]",
+		"idAuditor": 1,
+		"idOrganization": 1,
+		"idSystemManagement": 1,
+		"FinalReport": {
+			"idReport": 1,
+			"description": ""
+		},
+		"isTakeCertificate": false,
+		"isPass": "[notYet | pass | fail]",
+		"standardsStat": [
+			{
+				"idStandardStat": 1,
+				"passStat": "[notYet | pass | fail]"
+
+			}
+		],
+        "RequirementsStat": [
+					{
+						"idRequirementStat": 1,
+						"passStat": "[notYet | pass | fail]",
+                        "Solution":{
+                            "idSolution":1,
+                            "type":"[correction | action]",
+                            "idResponsible":1
+                        }
+					}
+				]
+	}
+]

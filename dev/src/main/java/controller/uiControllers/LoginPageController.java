@@ -1,18 +1,24 @@
-package controller;
+package controller.uiControllers;
 
-import view.DashboardAdmin;
-import view.DashboardAuditor;
-import view.LoginPage;
+
+
+
+import view.pages.AdminDashboard.AdminDashboard;
+import view.pages.AuditorDashboard.AuditorDashboard;
+import view.pages.LoginPage;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginController {
+public class LoginPageController {
     private LoginPage view;
 
-    public LoginController(LoginPage view) {
+    public LoginPageController(LoginPage view) {
         this.view = view;
         AddLoginPageEvents();
+
+
     }
 
     void AddLoginPageEvents() {
@@ -25,12 +31,12 @@ public class LoginController {
                 // Handle login logic here
                 if (email.isEmpty() || password.isEmpty()) {
                     JOptionPane.showMessageDialog(view, "Email and password cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-                } else if (email.equals("Admin@gmail.com") && password.equals("admin")) {
+                } else if (email.equals("a") && password.equals("a")) {
                     view.dispose(); // Close the LoginPage
-                    new DashboardAdmin(); // Open the Admin Dashboard
-                } else if (email.equals("Auditor@gmail.com") && password.equals("auditor")) {
+                    new AdminDashboard(); // Open the Admin Dashboard
+                } else if (email.equals("b") && password.equals("b")) {
                     view.dispose(); // Close the LoginPage
-                    new DashboardAuditor(); // Open the Auditor Dashboard
+                    new AuditorDashboard(); // Open the Auditor Dashboard
                 } else {
                     JOptionPane.showMessageDialog(view, "Incorrect Email/password.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
