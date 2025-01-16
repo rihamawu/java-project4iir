@@ -1,10 +1,12 @@
 package view.pages.AuditorDashboard;
 
-import controller.uiControllers.AuditorDashboard.AuditorDashboardController;
-import view.pages.AdminDashboard.OrganizationManagementTab;
+import controller.Pages.AuditorDashboard.AuditorDashboardController;
+import view.pages.LoginPage;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AuditorDashboard extends JFrame {
     private JTabbedPane tabbedPane;
@@ -67,9 +69,9 @@ public class AuditorDashboard extends JFrame {
         tabbedPane.setTabPlacement(JTabbedPane.LEFT);
 
         // Add tabs
-        tabbedPane.addTab("Gestion des systemes de gestion", new ManagementSystemAuditorTab());
-        tabbedPane.addTab("Gestion des standard", new StandardAuditorTab());
-        tabbedPane.addTab("Gestion des Audit", new AuditsAuditorTab());
+        tabbedPane.addTab("Gestion des systemes de gestion", new SystemManagementAuditorTab());
+        tabbedPane.addTab("Gestion des standard", new StandardManagementAuditorTab());
+        tabbedPane.addTab("Gestion des Audit", new AuditsManagementAuditorTab());
 
 
         // Add the tabbed pane to the center of the frame
@@ -89,6 +91,18 @@ public class AuditorDashboard extends JFrame {
         // Add the footer panel to the bottom of the frame
         add(footerPanel, BorderLayout.SOUTH);
 
+
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current AdminDashboard window
+                dispose();
+
+                // Open the Login window
+                LoginPage login = new LoginPage();
+                login.setVisible(true);
+            }
+        });
         // Set the frame visible
         setVisible(true);
     }

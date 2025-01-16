@@ -1,7 +1,11 @@
 package view.pages.AdminDashboard;
 
+import view.pages.LoginPage;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AdminDashboard extends JFrame {
     private JTabbedPane tabbedPane;
@@ -87,6 +91,17 @@ public class AdminDashboard extends JFrame {
         add(footerPanel, BorderLayout.SOUTH);
 
         // Set the frame visible
+        logoutButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Close the current AdminDashboard window
+                dispose();
+
+                // Open the Login window
+                LoginPage login = new LoginPage();
+                login.setVisible(true);
+            }
+        });
         setVisible(true);
     }
 

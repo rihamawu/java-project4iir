@@ -1,9 +1,9 @@
 package view.pages.AdminDashboard;
 
-import controller.uiControllers.adminDashboard.Tabs.ManagementSystemManagementTabController;
-import model.SystemManagement.ManagementSystem;
-import utils.ControllersGetter;
-import view.components.ButtonsContainer;
+import controller.Pages.adminDashboard.Tabs.ManagementSystemManagementTabController;
+import model.managementSystem.ManagementSystem;
+import utils.globalControllersGetter;
+import view.ButtonsContainer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -22,7 +22,7 @@ public class ManagementSystemManagementTab extends JPanel {
     private JTable managementSystemTable;
 
     public ManagementSystemManagementTab() {
-        this.data = ControllersGetter.organizationsController.getAllManagementSystems(); // Get all management systems
+        this.data = globalControllersGetter.organizationsController.getAllManagementSystems(); // Get all management systems
         managementSystemManagementTabController = new ManagementSystemManagementTabController(this);
         setUpUi();
     }
@@ -103,7 +103,7 @@ public class ManagementSystemManagementTab extends JPanel {
 
     public void refreshTable() {
         // Fetch the latest data
-        data = ControllersGetter.organizationsController.getAllManagementSystems();
+        data = globalControllersGetter.organizationsController.getAllManagementSystems();
 
         // Clear the existing table data
         model.setRowCount(0);

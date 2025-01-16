@@ -14,11 +14,11 @@ public class Audit {
     private String idAuditor;
     private String idOrganization;
     private String idSystemManagement;
-    private FinalReport finalReport;
+    private RapportFinale rapportFinale;
     private String takeCertificate;
     private String isPass;
     private List<StandardStat> StandardsStat;
-    private List<RequirementStat> RequirementsStat;
+    private List<StatRequirement> RequirementsStat;
 
     // Default Constructor
     public Audit() {
@@ -30,17 +30,17 @@ public class Audit {
         this.idAuditor = "unknown";
         this.idOrganization = "unknown";
         this.idSystemManagement = "unknown";
-        this.finalReport = new FinalReport();
+        this.rapportFinale = new RapportFinale();
         setTakeCertificate("no");
         this.isPass = "notYet";
         this.StandardsStat =  new ArrayList<StandardStat>();
-        this.RequirementsStat = new ArrayList<RequirementStat>();
+        this.RequirementsStat = new ArrayList<StatRequirement>();
     }
 
     // Parameterized Constructor
     public Audit(String dateDebut, String ExpDate, String subject, String status, String idAuditor, String idOrganization,
-                 String idSystemManagement, FinalReport finalRapport, String takeCertificate, String isPass,
-                 List<StandardStat> StandardsStat, List<RequirementStat> RequirementsStat) {
+                 String idSystemManagement, RapportFinale finalRapport, String takeCertificate, String isPass,
+                 List<StandardStat> StandardsStat, List<StatRequirement> RequirementsStat) {
         this.idAudit = UUID.randomUUID().toString();
         this.dateDebut = dateDebut;
         this.expDate = ExpDate;
@@ -49,7 +49,7 @@ public class Audit {
         this.idAuditor = idAuditor;
         this.idOrganization = idOrganization;
         this.idSystemManagement = idSystemManagement;
-        this.finalReport = finalRapport;
+        this.rapportFinale = finalRapport;
         setTakeCertificate(takeCertificate);
         this.isPass = isPass;
         this.StandardsStat = StandardsStat;
@@ -123,12 +123,12 @@ public class Audit {
         this.idSystemManagement = idSystemManagement;
     }
 
-    public FinalReport getFinalReport() {
-        return finalReport;
+    public RapportFinale getFinalReport() {
+        return rapportFinale;
     }
 
-    public void setFinalReport(FinalReport finalReport) {
-        this.finalReport = finalReport;
+    public void setFinalReport(RapportFinale rapportFinale) {
+        this.rapportFinale = rapportFinale;
     }
 
     public String isTakeCertificate() {
@@ -168,11 +168,11 @@ public class Audit {
         this.StandardsStat = standardsStat;
     }
 
-    public List<RequirementStat> getRequirementsStat() {
+    public List<StatRequirement> getRequirementsStat() {
         return RequirementsStat;
     }
 
-    public void setRequirementsStat(List<RequirementStat> requirementsStat) {
+    public void setRequirementsStat(List<StatRequirement> requirementsStat) {
         this.RequirementsStat = requirementsStat;
     }
 
@@ -187,7 +187,7 @@ public class Audit {
                 ", idAuditor='" + idAuditor + '\'' +
                 ", idOrg='" + idOrganization + '\'' +
                 ", idSystemManagement='" + idSystemManagement + '\'' +
-                ", finalRapport=" + finalReport +
+                ", finalRapport=" + rapportFinale +
                 ", takeCertificate=" + takeCertificate +
                 ", isPass='" + isPass + '\'' +
                 ", arrStandardStat=" + StandardsStat +

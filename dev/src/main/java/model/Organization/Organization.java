@@ -1,6 +1,6 @@
 package model.Organization;
 
-import model.SystemManagement.ManagementSystem;
+import model.managementSystem.ManagementSystem;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -12,7 +12,7 @@ public class Organization {
     private String description;
     private ArrayList<Site> sites = new ArrayList<>();
     private ArrayList<ManagementSystem> managementSystems = new ArrayList<>();
-    private ArrayList<OrgProcess> orgProcesses = new ArrayList<>();
+    private ArrayList<OrganizationProcess> organizationProcesses = new ArrayList<>();
 
     // Constructors
     public Organization() {
@@ -33,13 +33,13 @@ public class Organization {
     }
 
     // Getters
-    public ArrayList<OrgProcess> getOrgProcesses() {
-        return orgProcesses;
+    public ArrayList<OrganizationProcess> getOrgProcesses() {
+        return organizationProcesses;
     }
 
     // Setters
-    public void setOrgProcesses(ArrayList<OrgProcess> orgProcesses) {
-        this.orgProcesses = orgProcesses;
+    public void setOrgProcesses(ArrayList<OrganizationProcess> organizationProcesses) {
+        this.organizationProcesses = organizationProcesses;
     }
 
     public String getIdOrganization() {
@@ -166,18 +166,18 @@ public class Organization {
     }
 
     // Method to add a Process
-    public void addOrgProcess(OrgProcess orgProcess) {
-        if (orgProcess != null) {
-            this.orgProcesses.add(orgProcess);
+    public void addOrgProcess(OrganizationProcess organizationProcess) {
+        if (organizationProcess != null) {
+            this.organizationProcesses.add(organizationProcess);
         }
     }
 
     // Method to edit a Process by ID
-    public boolean editOrgProcess(String idProcess, OrgProcess updatedOrgProcess) {
-        for (int i = 0; i < orgProcesses.size(); i++) {
-            if (orgProcesses.get(i).getIdOrgProcess().equals(idProcess)) {
+    public boolean editOrgProcess(String idProcess, OrganizationProcess updatedOrganizationProcess) {
+        for (int i = 0; i < organizationProcesses.size(); i++) {
+            if (organizationProcesses.get(i).getIdOrgProcess().equals(idProcess)) {
                 // Replace the process at the same index
-                orgProcesses.get(i).editProcess(updatedOrgProcess);
+                organizationProcesses.get(i).editProcess(updatedOrganizationProcess);
                 return true;
             }
         }
@@ -186,20 +186,20 @@ public class Organization {
 
     // Method to delete a Process by ID
     public boolean deleteOrgProcess(String processId) {
-        Optional<OrgProcess> processToDelete = orgProcesses.stream()
+        Optional<OrganizationProcess> processToDelete = organizationProcesses.stream()
                 .filter(orgProcess -> orgProcess.getIdOrgProcess().equals(processId))
                 .findFirst();
 
         if (processToDelete.isPresent()) {
-            orgProcesses.remove(processToDelete.get());
+            organizationProcesses.remove(processToDelete.get());
             return true;
         }
         return false;
     }
 
     // Method to find a Process by ID
-    public OrgProcess findProcessById(String processId) {
-        return orgProcesses.stream()
+    public OrganizationProcess findProcessById(String processId) {
+        return organizationProcesses.stream()
                 .filter(orgProcess -> orgProcess.getIdOrgProcess().equals(processId))
                 .findFirst()
                 .orElse(null);
@@ -213,7 +213,7 @@ public class Organization {
                 ", description='" + description + '\'' +
                 ", sites=" + sites +
                 ", systems=" + managementSystems +
-                ", orgProcesses=" + orgProcesses +
+                ", orgProcesses=" + organizationProcesses +
                 '}';
     }
 }

@@ -1,8 +1,8 @@
 package view.pages.AdminDashboard;
 
-import controller.uiControllers.FormDialogController;
+import controller.FormDialogController;
 
-import utils.interfaces.IPopUpDialog;
+import utils.IPopUpDialog;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,11 +15,11 @@ public class PopUpDialog extends JDialog {
 
 
 
-    public String getIdOrg() {
-        return idOrg;
+    public String getId() {
+        return id;
     }
 
-    String idOrg;
+    String id;
 
     public String getIdManagementSystem() {
         return idManagementSystem;
@@ -50,24 +50,24 @@ public class PopUpDialog extends JDialog {
 
         this.setVisible(true);
     }
-    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String idOrg) {
+    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String id) {
         super((JFrame) null, title, true); // Modal dialog
         setUpUI(fieldNames, data);
 
 
-        this.idOrg = idOrg;
+        this.id = id;
 
 
 
         formDialogController = new FormDialogController(this, iPopUpDialog);
         this.setVisible(true);
     }
-    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String idOrg,String idManagementSystem) {
+    public PopUpDialog(String title, String[] fieldNames, Object[] data, IPopUpDialog iPopUpDialog, String id, String idManagementSystem) {
         super((JFrame) null, title, true); // Modal dialog
         setUpUI(fieldNames, data);
 
 
-        this.idOrg =idOrg;
+        this.id = id;
         this.idManagementSystem= idManagementSystem;
 
 

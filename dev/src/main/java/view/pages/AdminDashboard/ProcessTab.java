@@ -1,9 +1,9 @@
 package view.pages.AdminDashboard;
 
-import controller.uiControllers.adminDashboard.Tabs.ProcessTabController;
-import model.Organization.OrgProcess;
-import utils.ControllersGetter;
-import view.components.ButtonsContainer;
+import controller.Pages.adminDashboard.Tabs.ProcessTabController;
+import model.Organization.OrganizationProcess;
+import utils.globalControllersGetter;
+import view.ButtonsContainer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -15,14 +15,14 @@ public class ProcessTab extends JPanel {
 
     private JButton createButton = new JButton("Create New Process");
     private ButtonsContainer buttonsContainer = new ButtonsContainer();
-    private List<OrgProcess> data;
+    private List<OrganizationProcess> data;
     private ProcessTabController processTabController;
     private static String[] columnNamesCreateEdit = {"IdOrganization", "Name", "Description"};
     private DefaultTableModel model;
     private JTable orgProcessTable;
 
     public ProcessTab() {
-        this.data = ControllersGetter.organizationsController.getAllProcesses(); // Get all processes
+        this.data = globalControllersGetter.organizationsController.getAllProcesses(); // Get all processes
         processTabController = new ProcessTabController(this);
         setUpUi();
     }
@@ -103,13 +103,13 @@ public class ProcessTab extends JPanel {
 
     public void refreshTable() {
         // Fetch the latest data
-        data = ControllersGetter.organizationsController.getAllProcesses();
+        data = globalControllersGetter.organizationsController.getAllProcesses();
 
         // Clear the existing table data
         model.setRowCount(0);
 
         // Add the new data to the table
-        for (OrgProcess process : data) {
+        for (OrganizationProcess process : data) {
             Object[] rowData = {
                     process.getIdOrgProcess(),
                     process.getIdOrganization(),

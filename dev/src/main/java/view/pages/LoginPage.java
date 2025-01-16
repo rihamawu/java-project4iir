@@ -1,7 +1,7 @@
 package view.pages;
 
 
-import controller.uiControllers.LoginPageController;
+import controller.Pages.LoginPageController;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,11 +1,9 @@
 package view.pages.AdminDashboard;
 
-import controller.uiControllers.adminDashboard.Tabs.StandardTabController;
-import model.SystemManagement.Standard.Standard;
-import utils.TableConverterUtility;
-import utils.ControllersGetter;
-import view.components.ButtonsActions;
-import view.components.ButtonsContainer;
+import controller.Pages.adminDashboard.Tabs.StandardTabController;
+import model.managementSystem.Standard;
+import utils.globalControllersGetter;
+import view.ButtonsContainer;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -17,15 +15,15 @@ public class StandardTab extends JPanel {
 
     private JButton createButton = new JButton("Create New Standard");
     private ButtonsContainer buttonsContainer = new ButtonsContainer();
-    private List<Standard> data = ControllersGetter.organizationsController.getAllStandards();
+    private List<Standard> data;
     private StandardTabController standardTabController;
     private static String[] columnNamesCreateEdit = {"IdOrganization", "IdManagementSystem", "Name", "Description", "Reference"};
-    DefaultTableModel model;
-    JTable standardTable;
+    private DefaultTableModel model;
+    private JTable standardTable;
 
     public StandardTab() {
+        this.data = globalControllersGetter.organizationsController.getAllStandards(); // Get all standards
         standardTabController = new StandardTabController(this);
-        System.out.println("the data :" + data);
         setUpUi();
     }
 
@@ -72,13 +70,11 @@ public class StandardTab extends JPanel {
         // Define column names
         String[] columnNames = {"IdStandard", "IdOrganization", "IdManagementSystem", "Name", "Description", "Reference", "Actions"};
 
-        Object[][] tableData = TableConverterUtility.convertToTableData(data, columnNames);
-
         // Create and return the table model
-        model = new DefaultTableModel(tableData, columnNames) {
+        model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                // Only the "Actions" column (column index 6) is editable {accept event}
+                // Only the "Actions" column (column index 6) is editable
                 return column == 6;
             }
         };
@@ -94,18 +90,21 @@ public class StandardTab extends JPanel {
         // Add action buttons (Edit and Delete) to each row
         TableColumn actionsColumn = standardTable.getColumnModel().getColumn(6);
         actionsColumn.setCellRenderer(buttonsContainer);
-        actionsColumn.setCellEditor(new ButtonsActions(new JCheckBox(), standardTable, standardTabController.getIButtonEditorEventsHandler()));
+        actionsColumn.setCellEditor(new ButtonEditor(standardTable, standardTabController));
 
         // Add the table to a scroll pane
         JScrollPane scrollPane = new JScrollPane(standardTable);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         this.add(scrollPane, BorderLayout.CENTER);
+
+        // Load initial data
+        refreshTable();
     }
 
     public void refreshTable() {
         // Fetch the latest data
-        data = ControllersGetter.organizationsController.getAllStandards();
-        System.out.println(data);
+        data = globalControllersGetter.organizationsController.getAllStandards();
+
         // Clear the existing table data
         model.setRowCount(0);
 
@@ -123,20 +122,98 @@ public class StandardTab extends JPanel {
             model.addRow(rowData);
         }
 
-        TableColumn actionsColumn = standardTable.getColumnModel().getColumn(6);
-        standardTable.removeColumn(actionsColumn);
-
-        // Recreate the "Actions" column with a new ButtonRenderer and ButtonEditor
-        actionsColumn = new TableColumn(6);
-        actionsColumn.setHeaderValue("Actions");
-        actionsColumn.setCellRenderer(new ButtonsContainer());
-        actionsColumn.setCellEditor(new ButtonsActions(new JCheckBox(), standardTable, standardTabController.getIButtonEditorEventsHandler()));
-
-        // Re-add the "Actions" column to the table
-        standardTable.addColumn(actionsColumn);
-
         // Repaint the table to reflect the changes
         standardTable.repaint();
+    }
+
+    // Inner class for ButtonEditor
+    public class ButtonEditor extends DefaultCellEditor {
+        private JPanel panel;
+        private JButton editButton;
+        private JButton deleteButton;
+        private JTable table;
+        private int currentRow;
+        private Object[] rowData;
+        private String idOrg; // Organization ID
+        private String idManagementSystem; // Management System ID
+        private String idStandard; // Standard ID
+
+        public ButtonEditor(JTable table, StandardTabController controller) {
+            super(new JCheckBox());
+            this.table = table;
+
+            // Create Edit button
+            editButton = new JButton("Edit");
+            editButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            editButton.setBackground(new Color(52, 152, 219)); // Blue color
+            editButton.setForeground(Color.WHITE);
+            editButton.setFocusPainted(false);
+            editButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+            // Create Delete button
+            deleteButton = new JButton("Delete");
+            deleteButton.setFont(new Font("Segoe UI", Font.BOLD, 12));
+            deleteButton.setBackground(new Color(231, 76, 60)); // Red color
+            deleteButton.setForeground(Color.WHITE);
+            deleteButton.setFocusPainted(false);
+            deleteButton.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+
+            // Add action listeners
+            editButton.addActionListener(e -> {
+                fireEditingStopped();
+                controller.handleEditStandard(ButtonEditor.this);
+            });
+
+            deleteButton.addActionListener(e -> {
+                fireEditingStopped();
+                controller.handleDeleteStandard(this);
+            });
+
+            // Create a panel to hold the buttons
+            panel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 0));
+            panel.setBackground(new Color(236, 240, 241)); // Match the background color
+            panel.add(editButton);
+            panel.add(deleteButton);
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            currentRow = row; // Store the current row index
+
+            // Save the row data to the instance variable
+            rowData = new Object[table.getColumnCount() - 1];
+            for (int col = 0; col < table.getColumnCount() - 1; col++) {
+                rowData[col] = table.getModel().getValueAt(row, col + 1);
+            }
+
+            // Extract the organization ID, management system ID, and standard ID from the table
+            idOrg = (String) table.getModel().getValueAt(row, 1); // Organization ID is in the second column
+            idManagementSystem = (String) table.getModel().getValueAt(row, 2); // Management System ID is in the third column
+            idStandard = (String) table.getModel().getValueAt(row, 0); // Standard ID is in the first column
+
+            return panel; // Return the panel containing the buttons
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            return ""; // Return an empty string (no value is edited)
+        }
+
+        public Object[] getRowData() {
+            return rowData;
+        }
+
+        public String getIdOrg() {
+            return idOrg;
+        }
+
+        public String getIdManagementSystem() {
+            return idManagementSystem;
+        }
+
+        public String getIdStandard() {
+            return idStandard;
+        }
     }
 
     public static void main(String[] args) {

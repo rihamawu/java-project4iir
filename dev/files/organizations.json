@@ -1,0 +1,43 @@
+[ {
+  "idOrganization" : "1",
+  "name" : "dddaaa",
+  "description" : "ddddereeaa",
+  "sites" : [ ],
+  "managementSystems" : [ {
+    "idManagementSystem" : "1",
+    "idOrganization" : "1",
+    "description" : "d",
+    "certificate" : "d",
+    "standards" : [ {
+      "idStandard" : "c2a32c1b-8bc9-4147-a523-aa3f18d2c359",
+      "idOrganization" : "1",
+      "idManagementSystem" : "1",
+      "name" : "a",
+      "description" : "b",
+      "reference" : "c",
+      "clauses" : [ ]
+    } ],
+    "requirements" : [ ]
+  } ],
+  "orgProcesses" : [ {
+    "idOrgProcess" : "1",
+    "idOrganization" : "40356471-e12d-4f17-be5b-49b1d6af201a",
+    "name" : "s",
+    "description" : "s"
+  }, {
+    "idOrgProcess" : "2",
+    "idOrganization" : "1",
+    "name" : "d",
+    "description" : "d"
+  }, {
+    "idOrgProcess" : "1",
+    "idOrganization" : "40356471-e12d-4f17-be5b-49b1d6af201a",
+    "name" : "s",
+    "description" : "s"
+  }, {
+    "idOrgProcess" : "93a2be5b-857c-414e-b7d4-ae4e09a19a99",
+    "idOrganization" : "1",
+    "name" : "d",
+    "description" : "d"
+  } ]
+} ]
